@@ -40,6 +40,14 @@ struct ContentView: View {
         }
     }
     
+    struct ButtonSytle: ViewModifier {
+        func body(content: Content) -> some View {
+            return content
+                .background(Image("Button"))
+                .modifier(Shadow())
+        }
+    }
+    
     var body: some View {
         VStack {
             Spacer()
@@ -64,12 +72,12 @@ struct ContentView: View {
                     message: Text("The slider value is \(roundSlider()). Your scored \(getRoundScore() + bonus) this round"),
                     dismissButton: .default(Text("New round")){self.startRound(bonus: bonus)}
                 )
-            }
+            }.modifier(ButtonSytle())
             Spacer()
             HStack {
                 Button(action: startOver) {
                     Text("Start over")
-                }
+                }.modifier(ButtonSytle())
                 Spacer()
                 HStack {
                     Text("Score").modifier(LabelStyle())
@@ -83,7 +91,7 @@ struct ContentView: View {
                 Spacer()
                 Button(action:{}){
                     Text("Info")
-                }
+                }.modifier(ButtonSytle())
             }.padding(.bottom, 20)
         }.background(Image("Background"), alignment: .bottom)
     }
