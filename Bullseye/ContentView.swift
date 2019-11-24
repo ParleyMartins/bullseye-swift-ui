@@ -15,17 +15,44 @@ struct ContentView: View {
     @State var score = 0
     @State var round = 1
     
+    struct LabelStyle: ViewModifier {
+        func body(content: Content) -> some View {
+            return content
+                .foregroundColor(Color.white)
+                .modifier(Shadow())
+                .font(Font.custom("TrebuchetMS", size: 18))
+        }
+    }
+    
+    struct ValueStyle: ViewModifier {
+        func body(content: Content) -> some View {
+            return content
+                .foregroundColor(Color.yellow)
+                .modifier(Shadow())
+                .font(Font.custom("TrebuchetMS", size: 24))
+        }
+    }
+    
+    struct Shadow: ViewModifier {
+        func body(content: Content) -> some View {
+            return content
+                .shadow(color: Color.black, radius: 5, x:2, y:2)
+        }
+    }
+    
     var body: some View {
         VStack {
-            HStack {
-                Text("Put the bullseye as close as you can to: ")
-                Text("\(self.target)")
-            }.padding(.top, 20)
             Spacer()
             HStack {
-                Text("1")
+                Text("Put the bullseye as close as you can to: ")
+                    .modifier(LabelStyle())
+                Text("\(self.target)").modifier(ValueStyle())
+            }
+            Spacer()
+            HStack {
+                Text("1").modifier(LabelStyle())
                 Slider(value: $slider, in: 1...100)
-                Text("100")
+                Text("100").modifier(LabelStyle())
             }
             Spacer()
             Button(action: hitme){
@@ -45,20 +72,20 @@ struct ContentView: View {
                 }
                 Spacer()
                 HStack {
-                    Text("Score")
-                    Text("\(score)")
+                    Text("Score").modifier(LabelStyle())
+                    Text("\(score)").modifier(ValueStyle())
                 }
                 Spacer()
                 HStack {
-                    Text("Round")
-                    Text("\(round)")
+                    Text("Round").modifier(LabelStyle())
+                    Text("\(round)").modifier(ValueStyle())
                 }
                 Spacer()
                 Button(action:{}){
                     Text("Info")
                 }
             }.padding(.bottom, 20)
-        }
+        }.background(Image("Background"), alignment: .bottom)
     }
     
     func startOver() -> Void {
